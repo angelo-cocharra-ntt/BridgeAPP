@@ -1,0 +1,40 @@
+name: Build BridgeAppB APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Permite correr manualmente no browser do GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Configurar Gradle 8.7
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
+      - name: Criar local.properties com caminho do Android SDK
+        working-directory: BridgeAppB
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
+      - name: Build APK Debug
+        working-directory: BridgeAppB
+        run: gradle assembleDebug --no-daemon --stacktrace
+
+      - name: Upload APK como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: BridgeAppB-debug-apk
+          path: BridgeAppB/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7

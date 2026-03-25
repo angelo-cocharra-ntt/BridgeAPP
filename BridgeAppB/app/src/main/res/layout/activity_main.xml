@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="#F4F6F9">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌡 BridgeApp B"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#2C3E50"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serviço de dados para App A (Power Apps)"
+        android:textSize="14sp"
+        android:textColor="#7F8C8D"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:textSize="14sp"
+        android:textColor="#2C3E50"
+        android:lineSpacingMultiplier="1.4"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnStartService"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="▶ Iniciar Servidor (porta 8080)"
+        android:textSize="15sp"
+        android:backgroundTint="#27AE60"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnStopService"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="⏹ Parar Servidor"
+        android:textSize="15sp"
+        android:backgroundTint="#E74C3C" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Após iniciar, aceda a http://localhost:8080/sensors\nno WebBrowser control da App A."
+        android:textSize="12sp"
+        android:textColor="#95A5A6"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:lineSpacingMultiplier="1.4" />
+
+</LinearLayout>

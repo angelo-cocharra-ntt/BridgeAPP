@@ -1,0 +1,33 @@
+# BridgeAPP — POC
+
+## App B — Android (Kotlin + Ktor HTTP Server)
+Ignorar ficheiros de build e locais.
+
+# Gradle
+.gradle/
+build/
+BridgeAppB/build/
+BridgeAppB/app/build/
+BridgeAppB/local.properties
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+local.properties
+
+# Ficheiros de sistema
+.DS_Store
+Thumbs.db
+
+# PCF / Node
+BridgeAppA_PCF/SensorViewerPCF/node_modules/
+BridgeAppA_PCF/SensorViewerPCF/out/
+BridgeAppA_PCF/SensorViewerPCF/bin/
+BridgeAppA_PCF/SensorViewerPCF/obj/
+BridgeAppA_PCF/SolutionZipTemp/
+C:/BridgeAppPOC/
+
+# Logs
+*.log
