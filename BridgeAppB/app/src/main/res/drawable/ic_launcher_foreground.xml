@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- "B" letter for BridgeApp -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,24 L36,84 L60,84 C72,84 80,76 80,66 C80,58 76,52 68,50 C74,48 78,42 78,36 C78,28 72,24 60,24 Z M50,36 L58,36 C62,36 64,38 64,42 C64,46 62,48 58,48 L50,48 Z M50,60 L60,60 C65,60 67,62 67,66 C67,70 65,72 60,72 L50,72 Z" />
+</vector>
