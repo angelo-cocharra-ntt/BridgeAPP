@@ -322,20 +322,6 @@ SensorSolution_v2.zip
 | 6 | Escreveu todo o código Kotlin, TypeScript, XML, Gradle | Implementação completa |
 | 7 | Documentou decisões e aprendizagens em tempo real | Este documento |
 
-### Tempo poupado estimado
-
-| Actividade | Sem AI | Com AI |
-|---|---|---|
-| Pesquisa de opções de comunicação offline | ~3h | ~5min |
-| Identificação do constraint Power Apps connectors | ~2h (tentativa-erro) | Imediato |
-| Descoberta remoção Web Browser control | ~1h (pesquisa docs) | Imediato (screenshot) |
-| Setup Android project (Gradle, Ktor, Manifest) | ~2h | ~10min |
-| Implementação ForegroundService + Ktor + HTML | ~4h | ~15min |
-| Setup pac CLI + PCF project | ~1h | ~5min |
-| Implementação PCF TypeScript | ~3h | ~10min |
-| Empacotamento solução Power Apps | ~1h | ~10min |
-| **Total estimado** | **~17h** | **~55min** |
-
 ### Constrangimentos descobertos durante o processo (lições aprendidas)
 
 1. **Power Apps connectors rodam na cloud** — impossível aceder a localhost via connector nativo
@@ -461,24 +447,6 @@ Chrome (Android) → make.powerapps.com → Canvas App (Play)
 8. **Ícones de launcher são obrigatórios** no Android mesmo para debug builds — adaptive icons em XML funcionam sem recursos PNG
 9. **Conditional Access corporativo bloqueia apps nativas** mas não necessariamente browsers — importante documentar para contextos enterprise
 10. **Browser mobile como alternativa à app nativa** Power Apps — funciona para demos e POCs sem necessidade de dispositivo gerido
-
-### Tempo total poupado (actualizado)
-
-| Actividade | Sem AI | Com AI |
-|---|---|---|
-| Pesquisa de opções de comunicação offline | ~3h | ~5min |
-| Identificação do constraint Power Apps connectors | ~2h | Imediato |
-| Descoberta remoção Web Browser control | ~1h | Imediato |
-| Setup Android project + Gradle + Manifest | ~2h | ~10min |
-| Implementação ForegroundService + Ktor + HTML | ~4h | ~15min |
-| Setup pac CLI + PCF project | ~1h | ~5min |
-| Implementação PCF TypeScript | ~3h | ~10min |
-| Empacotamento solução Power Apps | ~1h | ~10min |
-| Setup GitHub Actions + debug erros build | ~2h | ~15min |
-| Diagnóstico Conditional Access + solução alternativa | ~1h | ~5min |
-| **Total estimado** | **~20h** | **~75min** |
-
-**Ratio de aceleração: ~16x mais rápido com AI**
 
 ---
 
