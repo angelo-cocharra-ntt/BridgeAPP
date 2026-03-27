@@ -39,9 +39,9 @@ class MainActivity : AppCompatActivity() {
                 .appendQueryParameter("updatedAt", System.currentTimeMillis().toString())
                 .build()
 
-            // Deixa o Android resolver o handler — se o PowerApps nativo estiver instalado
-            // e registado para apps.powerapps.com (App Links), abre na app nativa.
-            // Caso contrário, o sistema usa o browser por defeito.
+            // Abre o URI de retorno sem forçar nenhuma app específica.
+            // Se returnUrl usar ms-apps://, o Android entrega directamente ao PowerApps nativo,
+            // sem interstitial e sem browser. Param() funciona em ambos os contextos.
             startActivity(Intent(Intent.ACTION_VIEW, resultUri).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             })
