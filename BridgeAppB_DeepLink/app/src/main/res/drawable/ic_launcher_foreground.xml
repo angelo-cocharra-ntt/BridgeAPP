@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Ícone "link" para diferenciar da versão HTTP Server -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M45,63 C41,67 41,73 45,77 L50,82 C54,86 60,86 64,82 L74,72 C78,68 78,62 74,58 L69,53 C65,49 59,49 55,53 L52,56"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M63,45 C67,41 67,35 63,31 L58,26 C54,22 48,22 44,26 L34,36 C30,40 30,46 34,50 L39,55 C43,59 49,59 53,55 L56,52"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"/>
+</vector>
