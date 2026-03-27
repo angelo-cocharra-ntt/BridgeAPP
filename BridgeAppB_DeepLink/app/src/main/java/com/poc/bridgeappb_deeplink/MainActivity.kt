@@ -25,26 +25,25 @@ class MainActivity : AppCompatActivity() {
         val returnUrl = uri.getQueryParameter("returnUrl")
 
         if (returnUrl.isNullOrBlank()) {
-            // Sem returnUrl — apenas termina
             finish()
             return
         }
 
         val sensor = SensorDataGenerator.generate()
 
-        // Anexa os dados ao returnUrl como query parameters
-        val separator = if (returnUrl.contains("?")) "&" else "?"
-        val resultUrl = buildString {
-            append(returnUrl)
-            append(separator)
-            append("temperature=").append(sensor.temperature)
-            append("&humidity=").append(sensor.humidity)
-            append("&pressure=").append(sensor.pressure)
-            append("&updatedAt=").append(System.currentTimeMillis())
-        }
+        try {
+            // Usa Uri.Builder para anexar parâmetros de forma segura (evita crashes com URLs complexos)
+            val resultUri = Uri.parse(returnUrl).buildUpon()
+                .appendQueryParameter("temperature", sensor.temperature.toString())
+                .appendQueryParameter("humidity", sensor.humidity.toString())
+                .appendQueryParameter("pressure", sensor.pressure.toString())
+                .appendQueryParameter("updatedAt", System.currentTimeMillis().toString())
+                .build()
 
-        // Abre o browser de volta para a Canvas App com os dados
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resultUrl)))
+            startActivity(Intent(Intent.ACTION_VIEW, resultUri))
+        } catch (e: Exception) {
+            // Se falhar, termina silenciosamente
+        }
         finish()
     }
 }
