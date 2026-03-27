@@ -9,12 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val uri = intent?.data
+        val isDeepLink = uri != null && uri.scheme == "bridgeappb" && uri.host == "getsensors"
+
+        // Aplica tema transparente ANTES de super.onCreate() para que a janela
+        // nunca seja visível — elimina o flash da App B durante o deep link.
+        if (isDeepLink) {
+            setTheme(R.style.Theme_BridgeAppBDeepLink_Transparent)
+        }
+
         super.onCreate(savedInstanceState)
 
-        val uri = intent?.data
-        if (uri != null && uri.scheme == "bridgeappb" && uri.host == "getsensors") {
+        if (isDeepLink) {
             // Invocado via deep link — gera dados e regressa imediatamente
-            handleDeepLink(uri)
+            handleDeepLink(uri!!)
         } else {
             // Aberto normalmente pelo launcher — mostra ecrã informativo
             setContentView(R.layout.activity_main)
@@ -66,5 +74,7 @@ class MainActivity : AppCompatActivity() {
             // Se falhar, termina silenciosamente
         }
         finish()
+        // Remove animação de saída — transição completamente invisível
+        overridePendingTransition(0, 0)
     }
 }
