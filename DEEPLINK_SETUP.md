@@ -70,15 +70,28 @@ Launch(
 
 ## Passo 5 — Configurar os Labels de dados
 
-Insere 3 **Labels** (rótulos de texto) com estas fórmulas:
+Insere 3 **Labels** (rótulos de texto) com estas fórmulas.
 
-| Label | Propriedade `Text` | Exemplo de resultado |
-|---|---|---|
-| Temperatura | `If(IsBlank(Param("temperature")), "—", Param("temperature") & " °C")` | `24.5 °C` |
-| Humidade | `If(IsBlank(Param("humidity")), "—", Param("humidity") & " %")` | `65.0 %` |
-| Pressão | `If(IsBlank(Param("pressure")), "—", Param("pressure") & " hPa")` | `1013.0 hPa` |
+> **Importante:** O Power Apps em português usa **ponto e vírgula** (`;`) como separador de argumentos em vez de vírgula.
 
-> Na primeira abertura da app (sem deep link), os Params estão vazios — o `If(IsBlank(...))` mostra `—` em vez de um valor em branco.
+Clica na label → seleciona a propriedade **Text** na dropdown → cola na barra de fórmulas:
+
+**Label Temperatura:**
+```
+If(IsBlank(Param("temperature")); "--"; Param("temperature") & " C")
+```
+
+**Label Humidade:**
+```
+If(IsBlank(Param("humidity")); "--"; Param("humidity") & " %")
+```
+
+**Label Pressão:**
+```
+If(IsBlank(Param("pressure")); "--"; Param("pressure") & " hPa")
+```
+
+> Na primeira abertura da app (sem deep link), os Params estão vazios — o `If(IsBlank(...))` mostra `--` em vez de um valor em branco.
 
 ---
 
