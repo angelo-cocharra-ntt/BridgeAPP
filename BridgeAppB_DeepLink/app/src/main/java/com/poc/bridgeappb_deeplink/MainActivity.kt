@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val sensor = SensorDataGenerator.generate()
 
         try {
-            // Usa Uri.Builder para anexar parâmetros de forma segura (evita crashes com URLs complexos)
             val resultUri = Uri.parse(returnUrl).buildUpon()
                 .appendQueryParameter("temperature", sensor.temperature.toString())
                 .appendQueryParameter("humidity", sensor.humidity.toString())
@@ -40,7 +39,19 @@ class MainActivity : AppCompatActivity() {
                 .appendQueryParameter("updatedAt", System.currentTimeMillis().toString())
                 .build()
 
-            startActivity(Intent(Intent.ACTION_VIEW, resultUri))
+            // Força abertura no Chrome para garantir que os Param() do Power Apps funcionam
+            val intent = Intent(Intent.ACTION_VIEW, resultUri).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                setPackage("com.android.chrome")
+            }
+            try {
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Chrome não disponível — usa browser por defeito
+                startActivity(Intent(Intent.ACTION_VIEW, resultUri).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
+            }
         } catch (e: Exception) {
             // Se falhar, termina silenciosamente
         }
