@@ -39,19 +39,12 @@ class MainActivity : AppCompatActivity() {
                 .appendQueryParameter("updatedAt", System.currentTimeMillis().toString())
                 .build()
 
-            // Força abertura no Chrome para garantir que os Param() do Power Apps funcionam
-            val intent = Intent(Intent.ACTION_VIEW, resultUri).apply {
+            // Deixa o Android resolver o handler — se o PowerApps nativo estiver instalado
+            // e registado para apps.powerapps.com (App Links), abre na app nativa.
+            // Caso contrário, o sistema usa o browser por defeito.
+            startActivity(Intent(Intent.ACTION_VIEW, resultUri).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                setPackage("com.android.chrome")
-            }
-            try {
-                startActivity(intent)
-            } catch (e: Exception) {
-                // Chrome não disponível — usa browser por defeito
-                startActivity(Intent(Intent.ACTION_VIEW, resultUri).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                })
-            }
+            })
         } catch (e: Exception) {
             // Se falhar, termina silenciosamente
         }
