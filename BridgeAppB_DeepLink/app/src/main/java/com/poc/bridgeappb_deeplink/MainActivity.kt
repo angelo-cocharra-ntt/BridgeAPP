@@ -39,11 +39,11 @@ class MainActivity : AppCompatActivity() {
                 .appendQueryParameter("updatedAt", System.currentTimeMillis().toString())
                 .build()
 
-            // Abre directamente no PowerApps nativo (com.microsoft.msapps),
-            // mantendo o URL https://apps.powerapps.com — garante que Param() funciona
-            // e evita o interstitial "Abrir a aplicação?" do Chrome.
+            // FLAG_ACTIVITY_CLEAR_TASK força o PowerApps nativo a reiniciar completamente
+            // com o novo URL — garante que Param() relê os query parameters dos sensores.
+            // Sem este flag, o PowerApps fica em cache e Param() não se reavalia.
             val powerAppsIntent = Intent(Intent.ACTION_VIEW, resultUri).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 setPackage("com.microsoft.msapps")
             }
             try {
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                 try {
                     startActivity(chromeIntent)
                 } catch (e2: Exception) {
-                    // Chrome também não disponível — usa browser por defeito
                     startActivity(Intent(Intent.ACTION_VIEW, resultUri).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     })
