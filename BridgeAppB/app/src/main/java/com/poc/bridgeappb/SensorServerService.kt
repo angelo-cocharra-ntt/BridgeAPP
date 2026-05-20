@@ -12,7 +12,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.server.application.call
 import io.ktor.server.application.install
+import io.ktor.server.engine.applicationEngineEnvironment
+import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.engine.sslConnector
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.response.respondText
@@ -22,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import java.security.KeyStore
 
 /**
  * ForegroundService que mantém o servidor Ktor HTTP a correr em background.
@@ -43,53 +47,64 @@ class SensorServerService : Service() {
     private val gson = Gson()
 
     private val server by lazy {
-        embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0") {
-            // CORS: permite que o WebView do Power Apps aceda ao servidor local
-            install(CORS) {
-                anyHost()
-                allowHeader(HttpHeaders.ContentType)
-                allowMethod(HttpMethod.Get)
+        val keyStore = KeyStore.getInstance("PKCS12").apply {
+            applicationContext.assets.open("localhost.p12").use { load(it, "bridgeapp".toCharArray()) }
+        }
+
+        val environment = applicationEngineEnvironment {
+            connector {
+                host = "0.0.0.0"
+                port = SERVER_PORT  // HTTP 8080 (fallback)
+            }
+            sslConnector(
+                keyStore = keyStore,
+                keyAlias = "localhost",
+                keyStorePassword = { "bridgeapp".toCharArray() },
+                privateKeyPassword = { "bridgeapp".toCharArray() }
+            ) {
+                host = "0.0.0.0"
+                port = SERVER_PORT_SSL  // HTTPS 8443
             }
 
-            routing {
-                // ---------------------------------------------------------
-                // GET /sensors — HTML dashboard elegante para o WebBrowser
-                // O utilizador da App A vê este conteúdo sem saber da App B
-                // ---------------------------------------------------------
-                get("/sensors") {
-                    val reading = dataSource.currentReading
-                    val history = dataSource.history
-                    call.respondText(ContentType.Text.Html) {
-                        buildMeterHtml(reading, history)
+            module {
+                // CORS: permite que o WebView do Power Apps aceda ao servidor local
+                install(CORS) {
+                    anyHost()
+                    allowHeader(HttpHeaders.ContentType)
+                    allowMethod(HttpMethod.Get)
+                }
+
+                routing {
+                    get("/sensors") {
+                        val reading = dataSource.currentReading
+                        val history = dataSource.history
+                        call.respondText(ContentType.Text.Html) {
+                            buildMeterHtml(reading, history)
+                        }
                     }
-                }
 
-                // ---------------------------------------------------------
-                // GET /api/sensors — JSON para o PCF / integração futura
-                // Aceita ?counterId=... para identificar o contador pretendido.
-                // Hoje o hardware só suporta um contador físico de cada vez,
-                // pelo que o counterId é apenas registado e devolvido no payload.
-                // ---------------------------------------------------------
-                get("/api/sensors") {
-                    val requestedCounterId = call.request.queryParameters["counterId"]
-                    val payload = mapOf(
-                        "current" to dataSource.currentReading,
-                        "history" to dataSource.history,
-                        "requestedCounterId" to requestedCounterId,
-                        "serverVersion" to "2.1.0"
-                    )
-                    call.respondText(
-                        gson.toJson(payload),
-                        ContentType.Application.Json
-                    )
-                }
+                    get("/api/sensors") {
+                        val requestedCounterId = call.request.queryParameters["counterId"]
+                        val payload = mapOf(
+                            "current" to dataSource.currentReading,
+                            "history" to dataSource.history,
+                            "requestedCounterId" to requestedCounterId,
+                            "serverVersion" to "2.2.0"
+                        )
+                        call.respondText(
+                            gson.toJson(payload),
+                            ContentType.Application.Json
+                        )
+                    }
 
-                // GET /health — verificação rápida do servidor
-                get("/health") {
-                    call.respondText("OK", ContentType.Text.Plain)
+                    get("/health") {
+                        call.respondText("OK", ContentType.Text.Plain)
+                    }
                 }
             }
         }
+
+        embeddedServer(Netty, environment)
     }
 
     override fun onCreate() {
@@ -269,6 +284,7 @@ ${if (historyRows.isNotEmpty()) """
 
     companion object {
         const val SERVER_PORT = 8080
+        const val SERVER_PORT_SSL = 8443
         private const val NOTIFICATION_ID = 1001
     }
 }
