@@ -46,7 +46,9 @@ android {
 
 dependencies {
     // ZIV SDK — DLMS/COSEM + FTDI D2xx (AARs locais)
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
+    // Usar apenas a variante correspondente ao build type para evitar classes duplicadas
+    debugImplementation(fileTree(mapOf("dir" to "libs", "include" to listOf("appapi-debug.aar", "*.jar"))))
+    releaseImplementation(fileTree(mapOf("dir" to "libs", "include" to listOf("appapi-release.aar", "*.jar"))))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

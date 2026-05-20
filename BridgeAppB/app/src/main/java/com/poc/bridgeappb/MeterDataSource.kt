@@ -154,25 +154,25 @@ class MeterDataSource(
         if (ret != ServiceReturnValue.OK) {
             val msg = try { ApiibLib.InterpretServiceReturnValue(ret) } catch (_: Exception) { "$ret" }
             return errorReading("InstantaneousValues.Get: $msg").copy(
-                serialNumber = id.numeroserie ?: "",
-                model = id.modelo ?: "",
-                firmware = id.firmware ?: "",
-                manufacturer = id.fabricante ?: ""
+                serialNumber = id.numeroserie?.toString() ?: "",
+                model = id.modelo?.toString() ?: "",
+                firmware = id.firmware?.toString() ?: "",
+                manufacturer = id.fabricante?.toString() ?: ""
             )
         }
 
         val v = iv.iv() ?: return errorReading("iv() devolveu null").copy(
-            serialNumber = id.numeroserie ?: "",
-            model = id.modelo ?: "",
-            firmware = id.firmware ?: "",
-            manufacturer = id.fabricante ?: ""
+            serialNumber = id.numeroserie?.toString() ?: "",
+            model = id.modelo?.toString() ?: "",
+            firmware = id.firmware?.toString() ?: "",
+            manufacturer = id.fabricante?.toString() ?: ""
         )
 
         return MeterReading(
-            serialNumber  = id.numeroserie  ?: "",
-            model         = id.modelo       ?: "",
-            firmware      = id.firmware     ?: "",
-            manufacturer  = id.fabricante   ?: "",
+            serialNumber  = id.numeroserie?.toString()  ?: "",
+            model         = id.modelo?.toString()       ?: "",
+            firmware      = id.firmware?.toString()     ?: "",
+            manufacturer  = id.fabricante?.toString()   ?: "",
             voltageL1     = v.VoltageL1,
             voltageL2     = v.VoltageL2,
             voltageL3     = v.VoltageL3,
