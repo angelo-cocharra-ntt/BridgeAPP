@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Filtro de dispositivos USB para o adaptador FTDI usado com contadores ZIV.
+    vendorId=0x0403 (1027) é o VID da FTDI Ltd — cobre todos os chips FT232/FT2232/FT4232.
+    Quando o Android deteta um dispositivo com este VID, lança automaticamente a MainActivity
+    para que o utilizador possa autorizar o acesso USB ao BridgeAppB.
+-->
+<resources>
+    <!-- FTDI Ltd — VID 0x0403 = 1027 decimal; productId omitido para cobrir todos os chips FTDI -->
+    <usb-device vendor-id="1027" />
+</resources>

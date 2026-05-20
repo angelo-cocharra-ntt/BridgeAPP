@@ -52,6 +52,52 @@
         android:textSize="15sp"
         android:backgroundTint="#E74C3C" />
 
+    <!-- Separador visual -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDE0E5"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Toggle de modo mock -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🧪 Modo Mock"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#2C3E50" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simula dados ZIV sem contador físico"
+                android:textSize="12sp"
+                android:textColor="#7F8C8D" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switchMockMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

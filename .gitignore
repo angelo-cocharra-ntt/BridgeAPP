@@ -31,3 +31,7 @@ C:/BridgeAppPOC/
 
 # Logs
 *.log
+
+
+# APM dependencies
+apm_modules/

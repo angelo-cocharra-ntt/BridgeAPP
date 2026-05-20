@@ -37,10 +37,17 @@ android {
             excludes += "META-INF/INDEX.LIST"
             excludes += "META-INF/io.netty.versions.properties"
         }
+        // ZIV AAR contém bibliotecas nativas (.so) para o FTDI D2xx
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 
 dependencies {
+    // ZIV SDK — DLMS/COSEM + FTDI D2xx (AARs locais)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

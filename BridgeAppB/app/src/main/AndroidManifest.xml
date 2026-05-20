@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:overrideLibrary="android.zivapi,android.dlms.protocol">
+
+    <!-- Adaptador USB FTDI para ligar ao contador via cabo -->
+    <uses-feature android:name="android.hardware.usb.host" />
 
     <!-- Permissões necessárias -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,16 +20,25 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BridgeAppB"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:replace="android:icon,android:theme">
 
-        <!-- Activity principal — apenas para setup inicial e debug -->
+        <!-- Activity principal — setup inicial e autorização USB -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Lança a Activity automaticamente quando o cabo USB FTDI é ligado -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/usb_device_filter" />
         </activity>
 
         <!--
